@@ -50,7 +50,7 @@ second();
 So why show you this? Because you can;t just call one function after another and hope they execute in the right order.
 ->Callbacks are a way to make sure certain code doesn't execute until other code has already finished execution.<-
 
-##Create a Callback
+## Create a Callback
 
 ```javascript
 function doHomework(subject) {
@@ -90,9 +90,50 @@ function alertFinished(){
 doHomework('math', alertFinished);
 ```
 
+# FreeCodeCamp
+
+https://guide.freecodecamp.org/javascript/callback-functions/
+
+## Example
+
+```javascript
+createQuote("eat your vegetables!", logQuote); // 1
+
+function createQuote(quote, callback){
+  var myQuote = "Like I always say, " + quote;
+                                        // quote = "eat your vegetables"
+  callback(myQuote); // 2
+  //callback = logQuote
+
+  //logQuote("Eat your vegetables");
+}
+
+function logQuote(quote){
+  console.log(quote);
+             // quote = "Like I always say, eat your vegetables"
+}
 
 
+// Result in console:
+-> Like I always say, eat your vegetables!
+```
 
+## Anonmous Functions as Callbacks
+
+```javascript
+createQuote("eat your vegetables!", function(quote){
+                                      console.log(quote);
+                                    }
+            );
+
+function createQuote(quote, callback){
+  var myQuote = "Like I always say, " + quote;
+                                        // quote = "eat your vegetables"
+  callback(myQuote); // 2
+  //callback gets changed to the function above with "Myquote" as argument
+}
+-> "Like I always say, eat your vegetables"
+```
 
 
 
