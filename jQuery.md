@@ -1,14 +1,16 @@
 # JQUERY
 
-** With jQuery you select (query) HTML elements and perform "actions" on them **
+**With jQuery you select (query) HTML elements and perform "actions" on them**
 
-*Basic Syntax*: $(selector).action()
+*Basic Syntax*: `$(selector).action()`
 
-* A $ sign to define/access jQuery
-* A (selector) to "uqery (or find)" HTML elements
-* A jQuery action() to be performed on the element(s)
+* A `$` sign to define/access jQuery
+* A `(selector)` to "query (or find)" HTML elements
+* A jQuery `action()` to be performed on the element(s)
 
 ## The Document Ready Event
+
+The function below guarantees that your HTML will be fully loaded before any script on jQuery file starts to run
 
 ```javascript
 $(document).ready(function() {
@@ -25,7 +27,7 @@ $(function() {
 ```
 ## jQuery Selectors
 
-jQUery selectors are used to "'find" (or select) HTML elements based on their name, id, classes, types, attributes, values of attributes and much more.
+jQuery selectors are used to "find" (or select) HTML elements based on their name, id, classes, types, attributes, values of attributes and much more.
 
 All selectors in jQuery start with `$()`
 
@@ -33,10 +35,10 @@ All selectors in jQuery start with `$()`
 * $("#test") -> select id `#test`
 * $(".test") -> select class `.test`
 * $(this) -> select the current HTML element
-* $("p.intro") -> select all `<p>` elements with class=`intro`
+* $("p.intro") -> select all `<p>` elements with class `intro`
 * $("p:first") -> select the first `<p>` element
-* $("ul li:first") -> select the first `<li>` element of the first <ul>
-* $("ul li:first-child") -> select the first `<li>` element of every <ul>
+* $("ul li:first") -> select the first `<li>` element of the first `<ul>`
+* $("ul li:first-child") -> select the first `<li>` element of every `<ul>`
 * $("[href]") -> select all elements with href attribute
 
 ## jQuery Event Methods
