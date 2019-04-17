@@ -69,7 +69,7 @@ An event represents the precise moment when something happens
 
 ### The ON() Method
 
-The `on()` method attaches one or more event handles for the selected elements
+The `on()` method attaches one or more event handles for the selected elements.
 Attach a click event to a `<p>` element:
 
 ```javascript
@@ -98,19 +98,42 @@ $("p").on({
 
 Three simple, but useful, jQuery methods for DOM manipulation are:
 
-* text() - Sets or returns the text content of selected elements
-* html() - sets or returns the content of selected elements (ncluding HTML markup/tags)
-* val() - sets or returns the value of form fields
+* `text()` - Set or Get the text content of selected elements
+* `html()` - Set or Get the content of selected elements (ncluding HTML markup/tags)
+* `val()` - Set or Get the value of form fields
+
+```javascript
+<script>
+$(document).ready(function(){
+
+  $("#btn1").click(function(){
+    alert("Text: " + $("#test").text());
+  });
+
+  $("#btn2").click(function(){
+    alert("HTML: " + $("#test").html());
+  });
+
+  $("#btn1").click(function(){
+  alert("Value: " + $("#test").val());
+  });
+
+});
+</script>
+</head>
+<body>
+
+<p id="test">This is some <b>bold</b> text in a paragraph.</p>
+
+<button id="btn1">Show Text</button>
+<button id="btn2">Show HTML</button>
+````
 
 ## Get Attributes
 
 The jQuery `attr()` method is used to get attributes values.
 
 ```javascript
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
   $("button").click(function(){
@@ -124,18 +147,41 @@ $(document).ready(function(){
 <p><a href="https://www.w3schools.com" id="w3s">W3Schools.com</a></p>
 
 <button>Show href Value</button>
-
-</body>
-</html>
 ```
 
 ## Set Content and Attributes
 
 You can use the same three methods from `Get Content` to **set content**
 
-* text()
-* html()
-* val()
+* `text()`
+* `html()`
+* `val()`
+
+```javascript
+$(document).ready(function(){
+  $("#btn1").click(function(){
+    $("#test1").text("Hello world!");
+  });
+  $("#btn2").click(function(){
+    $("#test2").html("<b>Hello world!</b>");
+  });
+  $("#btn3").click(function(){
+    $("#test3").val("Dolly Duck");
+  });
+});
+</script>
+</head>
+<body>
+
+<p id="test1">This is a paragraph.</p>
+<p id="test2">This is another paragraph.</p>
+
+<p>Input field: <input type="text" id="test3" value="Mickey Mouse"></p>
+
+<button id="btn1">Set Text</button>
+<button id="btn2">Set HTML</button>
+<button id="btn3">Set Value</button>
+```
 
 **Set Attributes - attr()**
 
@@ -162,17 +208,39 @@ $("button").click(function(){
 
 jQuery have four method that are used to add new content
 
-* append() - inserts content **AT THE END** of the selected elements
-* prepend() - inserts content **AT THE BEGINNING** of the selected elements
-* after() - inserts content **AFTER** the selected elements
-* before() - inerts content **BEFORE** the selected elements
+* `append()` - inserts content **AT THE END** of the selected elements
+* `prepend()` - inserts content **AT THE BEGINNING** of the selected elements
+* `after()` - inserts content **AFTER** the selected elements
+* `before()` - inerts content **BEFORE** the selected elements
+
+```javascript
+// Append
+$("p").append("Some appended text.");
+
+function appendText() {
+  var txt1 = "<p>Text.</p>";               // Create element with HTML
+  var txt2 = $("<p></p>").text("Text.");   // Create with jQuery
+  var txt3 = document.createElement("p");  // Create with DOM
+  txt3.innerHTML = "Text.";
+  $("body").append(txt1, txt2, txt3);      // Append the new elements
+}
+
+// Prepend
+$("p").prepend("Some prepended text.");
+
+
+// After and Before
+$("img").after("Some text after");
+
+$("img").before("Some text before");
+```
 
 ## Remove Elements
 
 To remove elements and content, there are mainly two jQuery methods:
 
-* remove() - removes the selected elements (and its child elements)
-* empty() - removes the child elements from the selected element
+* `remove()` - removes the selected elements (and its child elements)
+* `empty()` - removes the child elements from the selected element
 
 **Filter The Elements to be Removed**
 
@@ -186,10 +254,10 @@ $("p").remove(".test");
 
 jQuery has several methods for CSS maipulation. We will look at the following methods:
 
-* addClass() - adds one or more classes to the selected elements
-* removeClass() - removes one or more classes from the selected elements
-* toggleClass() - toggles between adding/removing classes from the selected elements
-* css() - sets or returns the style attribute
+* `addClass()` - adds one or more classes to the selected elements
+* `removeClass()` - removes one or more classes from the selected elements
+* `toggleClass()` - toggles between adding/removing classes from the selected elements
+* `css()` - sets or returns the style attribute
 
 
 ### addClass()
@@ -225,3 +293,13 @@ $("button").click(function(){
 
 ### css()
 
+The css() method sets or retuns one or more styles properties for the selected elements
+
+```javascript
+$("p").css("background-color", "yellow");
+
+// or mutiple
+
+$("p").css({"background-color": "yellow", "font-size": "200%"});
+
+```
