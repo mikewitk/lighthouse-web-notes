@@ -23,26 +23,26 @@ Programming langues that are *predominantly* OO:
 * JS is nto strictly OO in the way that Java or Ruby are
 * Functional Programming is an alternative paradigm, and one that JavaScript also encourages
 
-# Simple OOP in JS
+## Simple OOP in JS
 
 In JS variables look like this
 
-[javascript]
+```javascript
 const dogSound = 'woof';
 let dogBreed = 'shih tzu';
-[end]
+```
 
 Functions look like this
 
-[javascript]
+```javascript
 function speak() {
     console.log(`${dogBreed} says ${dogSound}`);
 }
-[end]
+```
 
 and objects looks like this
 
-[javascript]
+```javascript
 const dog = {
     sond: 'woof',
     dogBreed: 'shih tzu',
@@ -50,7 +50,7 @@ const dog = {
         console.log(`${dogBreed} says ${dogSound}`);
     }
 }
-[end]
+```
 
 In OO we use objects to group related variables and functions together to keep our code more organized.
 
@@ -67,7 +67,7 @@ and depends on how and where it was called.
 All we really need to know for OO in JavaScript, is that when you use *this* inside a method, *this* refers
 to the **object** that the method was called on.
 
-[javascript]
+```javascript
 const dog = {
     sound:'woof'
     function speak () {
@@ -76,9 +76,10 @@ const dog = {
 }
 
 dog.speak();
-[end]
+// woof
+```
 
-[javascript]
+```javascript
 const dog = {
   sound: "woof",
   speak: function() {
@@ -93,15 +94,15 @@ const dog = {
 };
 // dog === this
 // woof
-[end]
+```
 
 ## Using objects
 
--> Express Response
+`Express Response`
 
 In Express, we write endpoint handlers that take two arguments, a *request* and a *response*.
 
-[javascript]
+```javascript
 app.get('/', (request, response) => {
     response.status() // to set the status of the response
     response.set() // to set outgoing headers of the response
@@ -110,13 +111,13 @@ app.get('/', (request, response) => {
     response.locals;
     response.headersSent;
 })
-[end]
+```
 
 So, again, we have these thigs called *objects* that fit into variables. They have some methods and properties, some internal state.
 
 Not all objects have all of these things, but the idea of bundling up some methods and some state into a single "thing" is what makes an objects an object (in the sense of "object-oriented)
 
-! Conclusion !
+`! Conclusion !`
 
 In the context of object orientation, an object is a little bundle of information.
 Actually, it's not just information (aja "state"); an object also has some stuff it can do (aka "behavirou")
