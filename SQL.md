@@ -94,5 +94,109 @@ ex:
 
 ## Class - SQL from our Apps
 
+> It all starts with the input
+
+node lookup_people.js Paul
+
+Where
+* node = commando to execute the file
+* lookup_people.js = file to be executed
+* Paul = the input from the user
+
+**Store Paul into a variable to be used inside your code**
+
+```javascript
+const famousPeople = process.argv[2];
+```
+
+> On your function file, you can define several functions and export all of them to be used on your main file
+
+```javascript
+module.exports = ( function () {
+
+  // But to start querying, we need to connect to the DB
+
+  const { Client } = require('pg')
+  const client = new Client({
+    user: 'vagrant',
+    host: 'localhost',
+    database: 'vagrant',
+    password: 'labber'
+  })
+  client.connect()
+
+  // Now the DB is connect we can start querying.
+
+  function a (arg1, callback) {
+    client.query(`` // query away. It is always good to test on the shell to check for the results
+      , [arg1, other], (err, res) => {
+        if (err) {
+          //deal with your errors
+        } else {
+          callback (res.rows)
+        }
+      }
+  }
+
+  // You can define as much functions as you need
+
+  // But at the end, you want to return an object of functions
+
+  return {
+    a: a,
+    b: b,
+    etc: etc
+    }
+})
+```
+
+This way, on our main file, we can call just the specific functions we need
+
+```javascript
+const bla = require ('fileName') //fileName and/or path to the functions file
+
+bla.a( (result) => {}) // and here you can decide what you want to do with the result data
+
+
+```
+
+# KNEX
+
+## Initializing the Library
+
+Knex's PostgreSQL client allows you to set the initial search path for each connection automatically using an additional option "searchPath" as shown below
+
+```javascript
+var pg = require('knex')({
+  client: 'pg',
+  connection: process.env.PG_CONNECTION_STRING,
+  searchPath: ['knex', 'public'],
+});
+```
+*Initializing the library should normally only ever happen once in your application, as it creates a connection pool for the current database, you should use the instance returned from the initialize call throughout your library*
+
+Specify the client for the particular favlour of SQL you are interested in:
+```javascript
+var pg = require('knex')({client: 'pg'});
+knex('table').insert({a: 'b'}).returning('*').toString();
+// "insert into "table" ("a") values ('b')"
+
+pg('table').insert({a: 'b'}).returning('*').toString();
+// "insert into "table" ("a") values ('b') returning *"
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
