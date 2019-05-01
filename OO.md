@@ -123,3 +123,43 @@ In the context of object orientation, an object is a little bundle of informatio
 Actually, it's not just information (aja "state"); an object also has some stuff it can do (aka "behavirou")
 
 OO bundles (groups) together related *state* and *logic* into an object that can be passed around as a single entity.
+
+## A Quick Disclaimer About Classes in JS
+
+JS's object system is based on another pattern known as *prototypes*, not *classes*.
+
+JavaScript mimics the behaviour of class-based or *classical* OOP languages now.
+
+> Classes and Instances
+
+Classes are blueprints. It has all details and instructions to build a house, but it's not a house.
+
+We can create as many houses as we want. Each house will be separate from the other one. Completely unique houses, but all based on the same blueprint.
+
+In OOP, *classes* are blueprints (templates) that we use to create *instances* of objects. A class describes what the object is going to be and we
+can create new objects using the class.
+
+To create a class, you use the **class** keyword with the name of the class
+
+```javascript
+class Pizza {
+
+}
+```
+- The class name should always be a noun
+- The first letter should always be capitalized
+
+To create a new object from the class, we use the **new** keyword
+
+```javascript
+let pizza1 = new Pizza();
+let pizza2 = new Pizza();
+```
+*pizza1* and *pizza2* are pizza objects. These objects are both instances of the same class. 
+
+```javascript
+pizza1 === pizza2 // false
+```
+
+> Methods and Properties
+
