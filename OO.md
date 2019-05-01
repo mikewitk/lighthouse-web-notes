@@ -163,3 +163,229 @@ pizza1 === pizza2 // false
 
 > Methods and Properties
 
+```javascript
+class Pizza {
+
+  constructor() {
+    this.toppings = ["cheese"];
+  }
+  
+  addTopping(topping) {
+    this.toppings.push(topping);
+  }
+}
+```
+
+You can add a method to a class with the following syntax:
+
+```javascript
+class SomeClass {
+  methodName(parameters) {
+    // this is a method
+  }
+}
+```
+
+To add properties to a class, simply use *this* keyword followed by the property name, then assign it a value
+
+```javascript
+class SomeClass {
+  someMethod() {
+    this.hello = "hi"; // Created a property called hello
+  }
+}
+```
+
+Any pizza object created from this *Pizza* class will have its own version  of these properties and methods.
+This means we can call the **addTopping()** method on *pizza1* without affecting *pizza2*.
+
+> Introduction to *Constructor*
+
+*Constructor* is a special kind of method that gets executed when an object instance is created from a class.
+
+This is a great place to setup default state for new instances.
+
+> Customizing the Constructor
+
+Every class can have a **single constructor method** that will get called when an instance of that class is created.
+
+Since it's a method, we can also **pass values to the constructor method**.
+
+```javascript
+class Pizza {
+  
+  constructor(size, crust) {
+    this.size = size;
+    this.crust = crust;
+    this.toppings = ["cheese"];
+  }
+
+  addToppings(topping) {
+    this.toppings.push(topping);
+  }
+}
+```
+
+## Inheritance
+
+With inheritance, we can build a new class based on existing class.
+
+Now there is a general Person class that contains the shared code. Student and Mentor inherit behaviour and state information from Person using the keyword extends. They also have their own code that reflects behaviour and information only pertaining to themselves.
+
+Student and Mentor are subclasses of the Person class, since they are extensions of that class. Person is the superclass in this relationship
+
+```javascript
+// This class represents all that is common between Student and Mentor
+class Person {
+  // moved here b/c it was identical
+  constructor(name, quirkyFact) {
+    this.name = name;
+    this.quirkyFact = quirkyFact;
+  }
+
+  // moved here b/c it was identical
+  bio() {
+    return `My name is ${this.name} and here's my quirky fact: ${this.quirkyFact}`;
+  }
+}
+class Student extends Person {
+  // stays in Student class since it's specific to students only
+  enroll(cohort) {
+    this.cohort = cohort;
+  }
+}
+
+class Mentor extends Person {
+  // specific to mentors
+  goOnShift() {
+    this.onShift = true;
+  }
+
+  // specific to mentors
+  goOffShift() {
+    this.onShift = false;
+  }
+}
+```
+
+## Method Overriding
+
+Sometimes you want a subclass to have similar but slightly different behaviour to its superclass.
+
+> Solution 1: Methor Override
+
+```javascript
+// Superclass
+class Person {
+  constructor(name, quirkyFact) {
+    this.name = name;
+    this.quirkyFact = quirkyFact;
+  }
+
+  bio() {
+    return `My name is ${this.name} and here's my quirky fact: ${this.quirkyFact}`;
+  }
+}
+
+// Subclass
+class Mentor extends Person {
+  // Completely re-define the bio method since it has more to say
+  bio() {
+    return `I'm a mentor at Lighthouse Labs. My name is ${this.name} and here's my quirky fact: ${this.quirkyFact}`;
+  }
+}
+
+// The Student class doesn't need to define bio since it can just use the one from Person
+
+// DRIVER CODE
+
+const bob = new Mentor('Bob Ross', 'I like mountains way too much');
+console.log(bob.bio());
+```
+
+While this is indeed a step in the right direction, it isn't ideal because we are repeating the logic.
+
+> Super
+
+OOP languages allow subclasses to have a reference on the parent class. This is usually done via the **super** keyword, and JavaScript
+supports it too
+
+```javascript
+// Super class
+class Person {
+  constructor(name, quirkyFact) {
+    this.name = name;
+    this.quirkyFact = quirkyFact;
+  }
+
+  bio() {
+    return `My name is ${this.name} and here's my quirky fact: ${this.quirkyFact}`;
+  }
+}
+
+class Mentor extends Person {
+  // Mentor bios need to include a bit more info
+  bio() {
+    return `I'm a mentor at Lighthouse Labs. ${super.bio()}`;
+  }
+}
+
+// DRIVER CODE
+
+const bob = new Mentor('Bob Ross', 'I like mountains way too much');
+console.log(bob.bio());
+```
+
+## Getters and Setters
+
+Getters and setters are special methods that are used to get the value of a property or set the value of a property.
+
+There are many reasons you might want to use getters and setters in your app.
+
+Let's go over two main reasons right now:
+
+* Validating data before assigning it to a property
+* Computing a value on the fly instead of simply pulling it out of a property
+
+**VALIDANTE DATA**
+
+Using a setter method instead of setting the size property directly, we can have the object validate the value before it gets set.
+
+```javascript
+// setSize now includes data validation
+  setSize(size) {
+    if (size === 's' || size === 'm' || size === 'l') {
+      this.size = size;
+    }
+    // else we could throw an error, return false, etc.
+    // We choose here to ignore all other values!
+```
+
+**COMPUTED VALUE**
+
+We could create a property to keep track of the price of a pizza. Every time the size or toppings change, we could just update this price property. But that involves constantly keeping track of the price. It would be easier to just compute the price of the pizza when it's needed.
+
+```javascript
+class Pizza {
+
+  // ...
+
+  getPrice() {
+    const basePrice = 10;
+    const toppingPrice = 2;
+    return basePrice + (this.toppings.length * toppingPrice);
+  }
+}
+
+// DRIVER CODE
+let pizza = new Pizza();
+pizza.getPrice();
+```
+
+**PRIVATE PROPERTIES**
+
+Now that we have our getter and setter methods in place, we want to make sure that no one accesses the properties directly.
+
+The way we do this in JavaScript is by adding an _ to the beginning of the property name. So this.size becomes this._size. 
+Adding an _ doesn't change the behaviour, it just tells other developers not to access the property directly.
+
