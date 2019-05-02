@@ -332,7 +332,7 @@ class Mentor extends Person {
 
 // DRIVER CODE
 
-const bob = new Mentor('Bob Ross', 'I like mountains way too much');
+const bob = new Mentor('Bob Ross', 'I like `mountains way too much');
 console.log(bob.bio());
 ```
 
@@ -347,7 +347,7 @@ Let's go over two main reasons right now:
 * Validating data before assigning it to a property
 * Computing a value on the fly instead of simply pulling it out of a property
 
-**VALIDANTE DATA**
+**VALIDATE DATA**
 
 Using a setter method instead of setting the size property directly, we can have the object validate the value before it gets set.
 
@@ -430,4 +430,38 @@ Setters allow us to validate data vefore assigning it to a property and getters 
 
 The **get** and **set** keywords just make our object's interface more simple.
 
-ß
+## Dependency Injection
+
+It simply mean *"passing an object the things it needs rather than having the object access them itsel"*
+To pass an **object** as reference to another object when we create it.
+
+It means that, unlike before, the objects (Deposit, Withdrawa) are not dependent on any surrounding data in their global or outer scope.
+
+
+## OO Best Practices
+
+Primary goals of OO:
+
+1. Reduce duplicated code (reusability)
+2. Breaking code up into sensible-divided untis (modularity)
+
+> Abstraction
+
+Cars take all the nasty complicated details about how they work and hide them away from the user of the car. Cars just give us a nice and simple *interface* to user.
+
+Abstraction is a technique for arranging complexity of computer systems. It works by establishin a level of complexity on which a person interacts with the system, suppressing the more complex details below the current level.
+
+> Single Responsibility Principle
+
+The single responsibility principle states that a class should be responsible for a single part of the app's functionality, giving it only one reason to change.
+Or more simply, **a class should only have one job.**
+
+`! SUMMARY !`
+
+* A **class** is a blueprint from which **instances** of objects can be created
+* Classes have data in the form of **value properties** and behaviour in the for of **methods**
+* Classes can inherit behaviour from other classes using the **extends** keyword
+* Subclasses can override methods that are inherited in their superclass
+* JS also gives us **get** and **set** keywords to more cleverly define methods that are data getters and setters
+
+
