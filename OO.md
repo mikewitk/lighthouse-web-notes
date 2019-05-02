@@ -389,3 +389,45 @@ Now that we have our getter and setter methods in place, we want to make sure th
 The way we do this in JavaScript is by adding an _ to the beginning of the property name. So this.size becomes this._size. 
 Adding an _ doesn't change the behaviour, it just tells other developers not to access the property directly.
 
+> A Better way *get* and *set*
+
+```javascript
+class Pizza {
+
+  // ...
+
+  // replace our custom getters / setters with these ones!
+  get price() {
+    const basePrice = 10;
+    const toppingPrice = 2;
+    return basePrice + this.toppings.length * toppingPrice;
+  }
+
+  set size(size) {
+    if (size === 's' || size === 'm' || size === 'l') {
+      this._size = size;
+    }
+  }
+}
+```
+
+The only new things here are the **get** and **set** keywords in front of the getter and setter methods. 
+The main difference we get from using these is that price and size will now be accessed as if they 
+were **value properties instead of method properties**. This gives us a slightly nicer interface:
+
+```javascript
+let pizza = new Pizza();
+
+pizza.price;      // instead of getPrice()
+pizza.size = 's'; // instead of setSize(size)
+```
+
+`! CONCLUSION ! `
+
+We explored the concept of **getters** and **setters** and how to use the **get** and **set** keywords in JS.
+
+Setters allow us to validate data vefore assigning it to a property and getters allow us to compute a value on the fly instead of simply pulling it out of a property.
+
+The **get** and **set** keywords just make our object's interface more simple.
+
+ß
