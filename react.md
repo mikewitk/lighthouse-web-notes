@@ -827,6 +827,102 @@ ReactDOM.render(
 
 A custom component extends the **Component** class in React, and, at the very least, implements the **render()** method. The **render()** method must return a JSX expression. Once we've created or included a component, we're able to use it in our JSX as we would with an HTML element.
 
+## Props (again)
+
+Wouldn't it be great if we could just create a single, reusable **CityListItem** component and pass it the name of the city when we use it?
+
+Props to the rescue:
+```javascript
+const vancouver = (<CityListItem city='Vancouver'/>);
+const toronto = (<CityListItem city='Toronto'/>);
+```
+Let's rebuild our program again with this more generalized Component, and pass the correct information to it.
+```javascript
+const root = document.getElementById('root');
+
+class CityListItem extends React.Component {
+  render(){
+    return (<li>{this.props.city}</li>);
+  }
+}
+
+class CityList extends React.Component {
+  render(){
+    return (<div>
+      <p>Here are some cities</p>
+      <ul>
+        <CityListItem city='Vancouver'/>
+        <CityListItem city='Toronto'/>
+      </ul>
+   </div>);
+  }
+}
+
+ReactDOM.render(
+  (<CityList/>),
+  root);
+```
+
+### Props -> Array of Props
+
+Of course, we still have the city components hard-coded into our render function. Let's do this in a more data-driven way, using props again. We'll start with an array of city names:
+```javascript
+const cityNames = ['Vancouver', 'Toronto'];
+```
+Then we'll use .map to create an array of <CityListItem />s from our cityNames array.
+```javascript
+const cityNames = ['Vancouver', 'Toronto'];
+const cityListItems = cityNames.map( (cityName) => {
+  return (<CityListItem city={cityName}/>);
+});
+```
+And we can embed that array of CityListItem elements directly into the return value of the render function.
+```javascript
+class CityList extends React.Component {
+  render(){
+    const cityNames = ['Vancouver', 'Toronto'];
+    const cityListItems = cityNames.map((cityName) => {
+      return (<CityListItem city={cityName}/>);
+    });
+
+    return (<div>
+      <p>Here are some cities</p>
+      <ul>{cityListItems}</ul>
+   </div>);
+  }
+}
+```
+
+In fact, let's make it even more dynamic, and pass this array as a prop to CityList.
+```javascript
+const cityNames = ['Vancouver', 'Toronto'];
+
+class CityList extends React.Component {
+  render(){
+    const cityListItems = this.props.cityNames.map((cityName) => {
+      return (<CityListItem city={cityName}/>);
+    });
+
+    return (<div>
+      <p>Here are some cities</p>
+      <ul>{cityListItems}</ul>
+   </div>);
+  }
+}
+
+ReactDOM.render(
+  (<CityList cityNames={cityNames}/>),
+  root);
+```
+
+
+
+
+
+
+
+
+
 
 
 
