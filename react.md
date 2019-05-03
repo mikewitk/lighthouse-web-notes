@@ -131,3 +131,63 @@ One of the expressive powers of JSX is as a templating language.
 The idea is that we have some data, we feed it through a template, annd we jave markup that comes out.
 We could think of a template as **function** that takes *data in* and spits *markup out*
 
+Here's how we pu dynamic content in our markup, specifically, the current date and time.
+
+```javascript
+const root = document.getElementById('root');
+
+ReactDOM.render(
+  (<h1 className='blue'>
+    {new Date().toString()}
+  </h1>),
+  root
+);
+```
+
+Here's the list of things that React will render:
+
+* Strings
+* Numbers (including NaN, which will show up as NaN)
+* Valid JSX expressions
+* Arrays containing strings, numbers, and valid JSX expressions
+
+And here's what React will ignore as if it never happened:
+
+* true and false
+* undefined and null
+* functions
+
+Anything else will raise an error.
+
+## MAKING A TEMPLATE
+
+So, if we have the following HTML:
+
+```javascript
+<div class='profile'>
+  <img style='max-width: 100%' src='http://joelshinness.com/assets/img/avatars/avatar_square_sm.jpg'/>
+  <p>Joel Shinness</p>
+  <p><small>Web Development Instructor</small></p>
+</div>
+```
+Then the data being displayed could be represented as the following object:
+
+```javascript
+const data = {
+  name: 'Joel Shinness',
+  title: 'Web Development Instructor',
+  photoUrl: 'http://joelshinness.com/assets/img/avatars/avatar_square_sm.jpg'
+}
+```
+Then the template would be something like:
+
+```javascript
+const markup = (<div className='profile'>
+  <img
+    style={{maxWidth: '100%'}}
+    src={data.photoUrl}/>
+  <p>{data.name}</p>
+  <p><small>{data.title}</small></p>
+</div>);
+```
+
