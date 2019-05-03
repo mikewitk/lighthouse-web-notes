@@ -365,7 +365,7 @@ ReactDOM.render(
 // * 🍸
 ```
 
-! UNIQUE "KEY" PROP !
+`! UNIQUE "KEY" PROP !`
 
 When we are dealing with data that has unique IDs, we can add the id to the element using a **key** prop, and React will be satisfied. It uses this information for performance purposes in its never-ending quest to do as few DOM updates as possible.
 
@@ -377,3 +377,62 @@ const emojiListItems = dataItem.emoji.map((emoji) => {
 
 **PS:** It only works here because our emojis are unique. **Keys need to be unique**
 
+## DOM Events
+
+With React, we add listeners directly by passing functions to certain props. In the following example, we will pass an **alertFn** function to a **button** component using its **onClick** prop.
+
+```javascript
+function alertFn() {
+  alert('This alert, tho, amirite?');
+}
+
+const buttonWithListener = (
+  <button onClick={alertFn}>
+    Click Me!
+  </button>);
+
+ReactDOM.render(buttonWithListener, root);
+```
+
+`When the buttons is clicked, the function will get called`
+
+Like regular event listeners, they take an **event** as an argument, and unless the function is already bound to a specific object, the keyword **this** will refer to the **DOM element** that had the listener.
+
+```javascript
+function onSubmit(event) {
+}
+
+const form = (<form onSubmit={onSubmit}>
+    <div>
+      <input name='email' type='email' placeholder='Email'/>
+    </div>
+    <div>
+      <input name='password' type='password' placeholder='Password'/>
+    </div>
+    <div><input type='submit' value='Log In'/></div>
+  </form>);
+```
+
+1. As with any submit form, the first step is to prevent default behavior
+
+```javascript
+function onSubmit(event) {
+  event.preventDefault();
+}
+```
+
+2. The form is the **target** of the event object. If the inputs have name attributes, then we can get them
+
+```javascript
+function onSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const emailInput = form.elements.email;
+  const passowrdInput = form.elements.password;
+
+  alert(`Your email is ${emailInput.value} and your password is ${passwordInput.value}`);
+
+  //reset inputs
+  emailInput.value = passwordInput.value = '';
+}
+```
