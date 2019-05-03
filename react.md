@@ -737,3 +737,219 @@ console.log('Laser Finn After Swim', laserFinn);
 //  position: { x: 2, y: 0 },
 //  laserSound: 'PEW PEW' }
 ```
+
+## Crafting Components Intro
+
+In React, there's just one architectural pattern: the **Component**.
+
+Let's build a simple CityList app. The output HTML will be like this:
+```html
+<div>
+  <p>Here are some cities</p>
+  <ul>
+    <li>Vancouver</li>
+    <li>Toronto</li>
+  </ul>
+</div>
+```
+And we want that to be rendered to the HTML by this line:
+
+```javascript
+const root = document.getElementById('root');
+
+ReactDOM.render(
+  (<CityList/>),
+  root);
+```
+
+Where do we start? Well, to create our own components, we can make a new class that extends React.Component.
+```javascript
+class CityList extends React.Component {
+}
+```
+That means that we're bringing in all the behaviour of **React.Component**, or as we said before:
+
+*Everything that is true of **React.Component** is also true of CityList, unless we specify otherwise.*
+
+Any subclass of **React.Component** will need to implement a **render()** method, and the **render()** method needs to return a valid JSX expression.
+
+Now that we're creating components, the JSX may be some combination of HTML tags and React components. And for now, we can just have it return HTML.
+```javascript
+class CityList extends React.Component {
+  render(){
+    return (<div>
+      <p>Here are some cities</p>
+      <ul>
+       <li>Vancouver</li>
+       <li>Toronto</li>
+     </ul>
+   </div>);
+  }
+}
+```
+
+`All component class names must begin with a capital letter. JSX treats tags that begin with lower case letters differently than those that begin with upper case letters.`
+
+Let's put in some more components that have some data or meaning. For now, we can at least make some **CityListItems**
+
+```javascript
+const root = document.getElementById('root');
+
+class VancouverCityListItem extends React.Component {
+  render(){
+    return (<li>Vancouver</li>);
+  }
+}
+
+class TorontoCityListItem extends React.Component {
+  render(){
+    return (<li>Toronto</li>);
+  }
+}
+
+class CityList extends React.Component {
+  render(){
+    return (<div>
+      <p>Here are some cities</p>
+      <ul>
+        <VancouverCityListItem/>
+        <TorontoCityListItem/>
+      </ul>
+   </div>);
+  }
+}
+
+ReactDOM.render(
+  (<CityList/>),
+  root);
+```
+`! CONCLUSION !`
+
+A custom component extends the **Component** class in React, and, at the very least, implements the **render()** method. The **render()** method must return a JSX expression. Once we've created or included a component, we're able to use it in our JSX as we would with an HTML element.
+
+
+
+
+## State
+
+Unlike *props*, which are passed into the component from outside, a component is responsible for creating and managins its own **state**.
+
+There are two things we can do with state
+
+1. We can read the state at any time with **this.state**
+2. We can set **this.state =** in a component's constructor to define the initial state
+
+Let's take a look at an example:
+```javascript
+import React from "react";
+import ReactDOM from "react-dom";
+
+class CountReader extends React.Component {
+  render() {
+    let timesOrTime = "times";
+    if (this.props.count === 1) {
+      timesOrTime = "time";
+    }
+    return (
+      <span>
+        {this.props.count} {timesOrTime}
+      </span>
+    );
+  }
+}
+
+class Incrementer extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // Set the initial state
+    this.state = { count: 0 };
+
+    // Increment the state count
+    this.increment = () => {
+      const oldCount = this.state.count;
+      this.setState({ count: oldCount + 1 });
+    };
+  }
+  render() {
+    return (
+      <p>
+        {/* Change state in response to user action */}
+        <button onClick={this.increment}>Increment</button>
+        {/* Display the current state */}
+        &nbsp;
+        <CountReader count={this.state.count} />
+      </p>
+    );
+  }
+}
+
+ReactDOM.render(<Incrementer />, document.getElementById("root"));
+```
+
+This incrementer should:
+1. Start with an initial count of 0
+2. Increase the count by 1 every time the button is clicked
+3. Update the UI to represent the current count, every time the count changes.
+
+Let analyze one by one
+
+**1. Start with an initial count of 0**
+```javascript
+class Incrementer extends React.Component {
+  constructor(props){
+    super(props); // SUPER IMPORTANT!  IF YOU LEAVE THIS OUT, STUFF BREAKS!
+    this.state = {count: 0};
+  }
+  render(){
+    return (<p>
+      <button>Increment</button>
+      <span>{this.state.count}</span>
+    </p>);
+  }
+}
+```
+In the components constructor, we are going to set any initial data on the state property. We can then read from the state when we render the component.
+
+When we override the constructor of a component, we *must* call **super()** with the components props. This is because we are inheriting from **React.Component** and we need to make sure that the **React.Component**'s constructor is always called.
+
+**2. Increase the count by 1 every time the button is clicked**
+```javascript
+class Incrementer extends React.Component{
+  constructor(props){
+    super(props);
+    // Set the initial state
+    this.state = {count: 0};
+    this.increment = this.increment.bind(this);
+  }
+  // Increment the state count
+  increment() {
+    this.setState((previousState) => {
+      return {count: previousState.count + 1}
+    });
+  }
+  render(){
+    return (<p>
+      {/* Change state in response to user action */}
+      <button onClick={this.increment}>Increment</button>
+      {/* Display the current state */}
+      <span>{this.state.count}</span>
+    </p>);
+  }
+}
+```
+Every time someone clicks the "Increment" button, we will call the **increment** method. The increment method will then call **setState** to update the current state of the component. **setState** accepts a function that will receive the **previousState** and return the new state as an object.
+
+**3. Update the UI to represent the current count, every time the count changes.**
+
+Calling **setState()** will always lead to the component being re-rendered. When the component is re-rendered, the span will display the value of **this.state.count**, which is now 1 more than it used to be.
+
+`! CONCLUSION !`
+
+A component has two sources of data: the **state** and the **props**.
+
+* State is a component's own cache of data, which it manages. It cannot be directly read or changed by any other component, regardless of whether that other component is a parent, child, or sibling to this component.
+* Props are sent from parent to child. A child element cannot change the props they are sent, though the parent may change the props sent.
+* A component may send data from its state to a child component's props.
+
+The one-way data flow from parent to child is a big part of React's philosophy, and how it manages to be so efficient.
