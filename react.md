@@ -5,7 +5,7 @@ React is a client-side JavaScript library first created at Facebook.
 In **React** there is just one pattern: the **COMPONENT**.
 Every app is a component, and components may be assembled from other components.
 
-usually, a component's job is to get or manage data, and then present that data.
+Usually, a component's job is to get or manage data, and then present that data.
 
 # Webpack
 
@@ -80,7 +80,7 @@ const thisIsTheSameAsAbove = (<div>
 
 `! CONCLUSION !`
 
-JSX elements are just syntactic sugar over the *React.createElement()* method. It makes ou code nicer to write, and is the preferred way of creating React Components.
+JSX elements are just syntactic sugar over the *React.createElement()* method. It makes our code nicer to write, and is the preferred way of creating React Components.
 
 ## Props
 
@@ -94,7 +94,7 @@ JSX elements are just syntactic sugar over the *React.createElement()* method. I
 ```
 *h1* **React element** with its *id* **prop** set to 'main-title'
 
-Props and attributes have a lot in common, but there is one **8*huge** difference between them:
+Props and attributes have a lot in common, but there is one **huge** difference between them:
 
 - HTML attributes can only take in **strings**.
 - Props accepts all sorts of **values, objects, arrays, and functions**.
@@ -128,10 +128,10 @@ const styleObject = { backgroundColor: 'lime' };
 ## Dynamic Content
 
 One of the expressive powers of JSX is as a templating language.
-The idea is that we have some data, we feed it through a template, annd we jave markup that comes out.
+The idea is that we have some data, we feed it through a template, and we have markup that comes out.
 We could think of a template as **function** that takes *data in* and spits *markup out*
 
-Here's how we pu dynamic content in our markup, specifically, the current date and time.
+Here's how we put dynamic content in our markup, specifically, the current date and time.
 
 ```javascript
 const root = document.getElementById('root');
@@ -190,4 +190,190 @@ const markup = (<div className='profile'>
   <p><small>{data.title}</small></p>
 </div>);
 ```
+
+## Logic and Looping
+
+> Conditional Inclusion / Exclusion
+
+```javascript
+function makeCard(dataItem) {
+  let warningLabel = undefined;
+  if(dataItem.warning){
+    warningLabel = (
+      <p className="warning">🤨{dataItem.warning}</p>
+      );
+  }
+  return <div className="card">{warningLabel}</div>; // <-- Line 8
+};
+
+const root = document.getElementById("root");
+ReactDOM.render(
+  <div>
+    {makeCard({})}
+    {makeCard({ warning: "Problem!" })}
+  </div>,
+  root
+);
+```
+
+* Line 8 of the code won't be rendered because JSX ignores: **true, false, null, and undefined**.
+
+> Condition && (<OnlyIfTrue/>)
+
+We can reduce the amount of code by using logical operators *||* and *&&*.
+
+```javascript
+const makeCard = dataItem => {
+  const warningLabel = dataItem.warning && (
+    <p className="warning">🤨{dataItem.warning}</p>
+  );
+
+  return <div className="card">{warningLabel}</div>;
+};
+```
+* If **data.warning** is a truthy string, then we'll include that bit of JSX.
+* If **data.warning** is *undefined*, *false*, or an empty string, then it will be promplty ignore by React.
+
+> Conditional Switch
+
+What if we want to include some markup if somethins is true, and something else if it's false?
+
+```javascript
+function makeCard(dataItem) {
+  const warningLabel = dataItem.warning && (
+    <p className="warning">🤨{dataItem.warning}</p>
+  );
+
+  let userLabel;
+  if(dataItem.user){
+    userLabel = (
+      <p className='logged-in'>👋 Hello, {dataItem.user.name}</p>
+    );
+  } else {
+    userLabel = (
+      <p className='not-logged-in'>🖐 You are not logged in.</p>
+    );
+  }
+
+  return (
+    <div className="card">
+      {warningLabel}
+      {userLabel}
+    </div>
+  );
+};
+
+const data1 = {};
+const data2 = {
+  warning: "Your account may expire soon!",
+  user: {
+    name: "Jeff"
+  }
+};
+
+const root = document.getElementById("root");
+ReactDOM.render(
+  <div>
+    {makeCard(data1)}
+    {makeCard(data2)}
+  </div>,
+  root
+);
+
+// You are not logged in.
+
+// Your account may expire soon!
+// Hello, Jeff
+```
+
+> Condition ? *<IfTrue/>) : (<IfFalse/>)
+
+```javascript
+function makeCard(dataItem) {
+  const warningLabel = dataItem.warning && (
+    <p className="warning">🤨{dataItem.warning}</p>
+  );
+
+  const userLabel = dataItem.user ? (
+    <p className='logged-in'>👋 Hello, {dataItem.user.name}</p>
+  ) : (
+    <p className='not-logged-in'>🖐 You are not logged in.</p>
+  );
+```
+
+> Looping
+
+In EJS, we used **for** or **.forEach(fn)** to iterate over an arry or object and perform some **instruction** on each member.
+In React, we are **composing** pieces rather than just running instructions, so here, we want to take an array of data and **get an array of JSX expressions**.
+
+We can do that by using **Array.prototype.map**
+
+Transform an array of data:
+```javascript
+["🍺", "🍷", "🍸"]
+```
+
+Into an array of JSX expressions:
+```javascript
+[<p>🤗</p>, <p>"💩"</p>, <p>"🍺"</p>]
+```
+
+Using map:
+```javascript
+emojis.map((emoji) => {
+  return <p>{emoji}</p>
+});
+```
+
+Example
+```javascript
+const data1 = {
+  emojis: ["☕️", "🍩"]
+};
+
+const data2 = {
+  emojis: ["🍺", "🍷", "🍸"]
+};
+
+function makeCard(dataItem) {
+
+  const emojiListItems = dataItem.emojis.map((emoji) => {
+    return (<li>{emoji}</li>);
+  });
+
+  return (
+    <div className="card">
+      <ul>{emojiListItems}</ul>
+    </div>
+  );
+};
+
+const root = document.getElementById("root");
+ReactDOM.render(
+  <div>
+    {makeCard(data1)}
+    {makeCard(data2)}
+  </div>,
+  root
+);
+
+// * ☕️
+// * 🍩
+
+// * 🍺
+// * 🍷
+// * 🍸
+```
+
+! UNIQUE "KEY" PROP !
+
+When we are dealing with data that has unique IDs, we can add the id to the element using a **key** prop, and Reac will be satisfied. It uses this information for performance purposes in its never-ending quest to do as few DOM updates as possible.
+
+```javascript
+const emojiListItems = dataItem.emoji.map((emoji) => {
+  return (<li key={emoji}>{emoji}</li>);
+});
+```
+
+**PS:** It only works here because our emojis are unique. **Keys need to be unique**
 
