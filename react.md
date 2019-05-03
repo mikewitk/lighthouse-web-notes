@@ -394,7 +394,7 @@ const buttonWithListener = (
 ReactDOM.render(buttonWithListener, root);
 ```
 
-`When the buttons is clicked, the function will get called`
+`When the button is clicked, the function will get called`
 
 Like regular event listeners, they take an **event** as an argument, and unless the function is already bound to a specific object, the keyword **this** will refer to the **DOM element** that had the listener.
 
@@ -435,4 +435,309 @@ function onSubmit(event) {
   //reset inputs
   emailInput.value = passwordInput.value = '';
 }
+```
+
+## React and ReactDOM
+
+When we want to use React in the browser, we have to include two libraries:
+
+* React: the library for creating views.
+* ReactDOM: the library used to actually render the UI in the browser.
+
+We can include these into your project in a few different ways.
+
+1. Script Tags
+
+Using normal script tags, we can include both libraries in your HTML file.
+```javascript
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+```
+
+2. Require
+
+If we are using webpack, and we like ES5, we can require the two libraries into our JavaScript file.
+```javascript
+var React = require('react');
+var ReactDOM = require('react-dom');
+```
+
+3. Import
+
+If we are using webpack, and we want to use ES6 features, we can import the two libraries into our JavaScript file. 
+**This is the preferred way of doing things**, so most examples will do look like this:
+```javascript
+import React from "react";
+import ReactDOM from "react-dom";
+```
+`The reason that there are two libraries instead of one, is so that the core react library doesn't have to be tied to the browser.` 
+`This means that we can use the react library on any platform, like mobile.`
+`In the browser, we have to include react and react-dom.` 
+`On mobile, we have to include react and react-native.` 
+`The react library is the same, but the rendering library changes.`
+
+### Render
+
+```javascript
+const greeting = <h1>Hello!</h1> // This uses the React Library
+const root = document.getElementById("root"); // Vanilla JS
+ReactDOM.render(greeting, root); // ReactDOM does the rendering
+```
+**ReactDom.render()** takes two parameters
+1. a React element
+2. The element in DOM where React will render the element to
+
+## Classes
+
+* If we want to make a bunch of objects that have the same behaviour, we can create a class that provides a blueprint:
+```javascript
+class Shark {
+}
+
+const finn = new Shark();
+console.log(finn);
+// CONSOLE: Shark {}
+```
+* We can add constructors that lets us add some information about a specific object.
+```javascript
+class Shark {
+  constructor(name) {
+    this.name = name;
+  }
+}
+const finn = new Shark('Finn');
+console.log(finn);
+//CONSOLE: Shark {name: 'Finn'}
+```
+* We can add new behaviours to the class with **methods**. There are functions added to the class that can reference the instance with **this**.
+```javascript
+class Shark {
+  constructor(name){
+    // Add the name to the shark object.
+    this.name = name;
+    this.position = {x: 0, y: 0};
+    console.log('This', this);
+    // CONSOLE: This Shark { name: 'Finn', position: { x: 0, y: 0 } }
+  }
+  /* SWIM METHODS */
+  swimRight(){
+    this.position.x += 1;
+  }
+  swimLeft(){
+    this.position.x -= 1;
+  }
+  swimUp(){
+    this.position.y += 1;
+  }
+  swimDown(){
+    this.position.y -= 1;
+  }
+}
+const finn = new Shark('Finn');
+console.log('Finn', finn);
+// CONSOLE: Finn Shark { name: 'Finn', position: { x: 0, y: 0 } }
+finn.swimRight();
+console.log('Finn After Swim', finn);
+// CONSOLE: Finn After Swim Shark { name: 'Finn', position: { x: 1, y: 0 } }
+```
+* If we have one class that has a lot of behaviour we like, and we want to make a more specialized version, we can **extend** the class
+```javascript
+class Shark {
+  constructor(name){
+    // Add the name to the shark object.
+    this.name = name;
+    this.position = {x: 0, y: 0};
+    console.log('This', this);
+    // CONSOLE: This Shark { name: 'Finn', position: { x: 0, y: 0 } }
+  }
+  /* SWIM METHODS */
+  swimRight(){
+    this.position.x += 1;
+  }
+  swimLeft(){
+    this.position.x -= 1;
+  }
+  swimUp(){
+    this.position.y += 1;
+  }
+  swimDown(){
+    this.position.y -= 1;
+  }
+}
+
+const finn = new Shark('Finn');
+console.log('Finn', finn);
+// CONSOLE: Finn Shark { name: 'Finn', position: { x: 0, y: 0 } }
+finn.swimRight();
+console.log('Finn After Swim', finn);
+// CONSOLE: Finn After Swim Shark { name: 'Finn', position: { x: 1, y: 0 } }
+
+class LaserShark extends Shark {
+  shoot(){
+    console.log('PEW PEW!');
+  }
+}
+
+const laserFinn = new LaserShark('Laser Finn');
+// CONSOLE: This LaserShark { name: 'Laser Finn', position: { x: 0, y: 0 } }
+console.log('Laser Finn', laserFinn);
+// CONSOLE: Laser Finn LaserShark { name: 'Laser Finn', position: { x: 0, y: 0 } }
+
+laserFinn.shoot();
+// CONSOLE: PEW PEW!
+```
+
+There are a number of ways to describe the relationship between **Shark** and **LaserShark**:
+
+* **LaserShark** extends **Shark**
+* **LaserShark** inherits from **Shark**
+* **LaserShark** is a *subclass* of **Shark**
+* **Shark** is the superclass of **LaserShark**
+* **LaserShark** is a child class of **Shark**
+* **Shark** is the parent class of **LaserShark**
+* Every instance of **LaserShark** is an instance of **Shark**
+* Anything that is true of a **Shark** is true of a **LaserShark**
+* The child class may have behaviour that doesn't exist in the parent class. **LaserShark**s can shoot, but regular **Shark**s can't.
+
+* You may **override** a parent class method in a child class. That means that any instance of the child class will use the overridden version instead of the original version.
+```javascript
+class Shark {
+  constructor(name){
+    // Add the name to the shark object.
+    this.name = name;
+    this.position = {x: 0, y: 0};
+    console.log('This', this);
+    // CONSOLE: This Shark { name: 'Finn', position: { x: 0, y: 0 } }
+  }
+  /* SWIM METHODS */
+  swimRight(){
+    this.position.x += 1;
+  }
+  swimLeft(){
+    this.position.x -= 1;
+  }
+  swimUp(){
+    this.position.y += 1;
+  }
+  swimDown(){
+    this.position.y -= 1;
+  }
+}
+
+const finn = new Shark('Finn');
+console.log('Finn', finn);
+// CONSOLE: Finn Shark { name: 'Finn', position: { x: 0, y: 0 } }
+finn.swimRight();
+console.log('Finn After Swim', finn);
+// CONSOLE: Finn After Swim Shark { name: 'Finn', position: { x: 1, y: 0 } }
+
+class LaserShark extends Shark {
+  shoot(){
+    console.log('PEW PEW!');
+  }
+  /* LASER SHARKS ARE FASTER! */
+  swimRight(){
+    this.position.x += 2;
+  }
+  swimLeft(){
+    this.position.x -= 2;
+  }
+  swimUp(){
+    this.position.y += 2;
+  }
+  swimDown(){
+    this.position.y -= 2;
+  }
+}
+
+const laserFinn = new LaserShark('Laser Finn');
+// CONSOLE: This LaserShark { name: 'Laser Finn', position: { x: 0, y: 0 } }
+console.log('Laser Finn', laserFinn);
+// CONSOLE: Laser Finn LaserShark { name: 'Laser Finn', position: { x: 0, y: 0 } }
+
+laserFinn.shoot();
+// CONSOLE: PEW PEW!
+
+laserFinn.swimRight();
+console.log('Laser Finn After Swim', laserFinn);
+// CONSOLE: Laser Finn After Swim LaserShark { name: 'Laser Finn', position: { x: 2, y: 0 } }
+```
+
+* If you have overriden the constructor, you can access the parent's class's constructor with **super**
+```javascript
+class Shark {
+  constructor(name){
+    // Add the name to the shark object.
+    this.name = name;
+    this.position = {x: 0, y: 0};
+    console.log('This', this);
+    // CONSOLE: This Shark { name: 'Finn', position: { x: 0, y: 0 } }
+  }
+  /* SWIM METHODS */
+  swimRight(){
+    this.position.x += 1;
+  }
+  swimLeft(){
+    this.position.x -= 1;
+  }
+  swimUp(){
+    this.position.y += 1;
+  }
+  swimDown(){
+    this.position.y -= 1;
+  }
+}
+
+const finn = new Shark('Finn');
+console.log('Finn', finn);
+// CONSOLE: Finn Shark { name: 'Finn', position: { x: 0, y: 0 } }
+finn.swimRight();
+console.log('Finn After Swim', finn);
+// CONSOLE: Finn After Swim Shark { name: 'Finn', position: { x: 1, y: 0 } }
+
+class LaserShark extends Shark {
+  constructor(name, laserSound){
+    super(name);
+    this.laserSound = laserSound;
+  }
+  shoot(){
+    console.log(`${this.name}: ${this.laserSound}!`);
+  }
+  /* LASER SHARKS ARE FASTER! */
+  swimRight(){
+    this.position.x += 2;
+  }
+  swimLeft(){
+    this.position.x -= 2;
+  }
+  swimUp(){
+    this.position.y += 2;
+  }
+  swimDown(){
+    this.position.y -= 2;
+  }
+}
+
+const laserFinn = new LaserShark('Laser Finn', 'PEW PEW');
+
+// CONSOLE: Laser Finn LaserShark {
+//  name: 'Laser Finn',
+//  position: { x: 0, y: 0 },
+//  laserSound: 'PEW PEW' }
+
+console.log('Laser Finn', laserFinn);
+// CONSOLE: Laser Finn LaserShark {
+//  name: 'Laser Finn',
+//  position: { x: 0, y: 0 },
+//  laserSound: 'PEW PEW' }
+
+laserFinn.shoot();
+// CONSOLE: Laser Finn: PEW PEW!
+
+laserFinn.swimRight();
+console.log('Laser Finn After Swim', laserFinn);
+// CONSOLE: Laser Finn After Swim LaserShark {
+//  name: 'Laser Finn',
+//  position: { x: 2, y: 0 },
+//  laserSound: 'PEW PEW' }
 ```
