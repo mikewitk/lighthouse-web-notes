@@ -470,11 +470,7 @@ If we are using webpack, and we want to use ES6 features, we can import the two 
 import React from "react";
 import ReactDOM from "react-dom";
 ```
-`The reason that there are two libraries instead of one, is so that the core react library doesn't have to be tied to the browser.` 
-`This means that we can use the react library on any platform, like mobile.`
-`In the browser, we have to include react and react-dom.` 
-`On mobile, we have to include react and react-native.` 
-`The react library is the same, but the rendering library changes.`
+`The reason that there are two libraries instead of one, is so that the core react library doesn't have to be tied to the browser. This means that we can use the react library on any platform, like mobile. In the browser, we have to include react and react-dom. On mobile, we have to include react and react-native. The react library is the same, but the rendering library changes.`
 
 ### Render
 
@@ -668,7 +664,7 @@ console.log('Laser Finn After Swim', laserFinn);
 class Shark {
   constructor(name){
     // Add the name to the shark object.
-    this.name = name;
+    this.namelol = name;
     this.position = {x: 0, y: 0};
     console.log('This', this);
     // CONSOLE: This Shark { name: 'Finn', position: { x: 0, y: 0 } }
@@ -696,12 +692,12 @@ console.log('Finn After Swim', finn);
 // CONSOLE: Finn After Swim Shark { name: 'Finn', position: { x: 1, y: 0 } }
 
 class LaserShark extends Shark {
-  constructor(name, laserSound){
-    super(name);
+  constructor(namelol, laserSound){
+    super(namelol);
     this.laserSound = laserSound;
   }
   shoot(){
-    console.log(`${this.name}: ${this.laserSound}!`);
+    console.log(`${this.namelol}: ${this.laserSound}!`);
   }
   /* LASER SHARKS ARE FASTER! */
   swimRight(){
