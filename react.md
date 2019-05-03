@@ -218,7 +218,7 @@ ReactDOM.render(
 
 * Line 8 of the code won't be rendered because JSX ignores: **true, false, null, and undefined**.
 
-> Condition && (<OnlyIfTrue/>)
+> Condition && (OnlyIfTrue)
 
 We can reduce the amount of code by using logical operators *||* and *&&*.
 
@@ -236,7 +236,7 @@ const makeCard = dataItem => {
 
 > Conditional Switch
 
-What if we want to include some markup if somethins is true, and something else if it's false?
+What if we want to include some markup if something is true, and something else if it's false?
 
 ```javascript
 function makeCard(dataItem) {
@@ -286,7 +286,7 @@ ReactDOM.render(
 // Hello, Jeff
 ```
 
-> Condition ? *<IfTrue/>) : (<IfFalse/>)
+> Condition ? (IfTrue) : (IfFalse)
 
 ```javascript
 function makeCard(dataItem) {
@@ -303,7 +303,7 @@ function makeCard(dataItem) {
 
 > Looping
 
-In EJS, we used **for** or **.forEach(fn)** to iterate over an arry or object and perform some **instruction** on each member.
+In EJS, we used **for** or **.forEach(fn)** to iterate over an array or object and perform some **instruction** on each member.
 In React, we are **composing** pieces rather than just running instructions, so here, we want to take an array of data and **get an array of JSX expressions**.
 
 We can do that by using **Array.prototype.map**
@@ -367,7 +367,7 @@ ReactDOM.render(
 
 ! UNIQUE "KEY" PROP !
 
-When we are dealing with data that has unique IDs, we can add the id to the element using a **key** prop, and Reac will be satisfied. It uses this information for performance purposes in its never-ending quest to do as few DOM updates as possible.
+When we are dealing with data that has unique IDs, we can add the id to the element using a **key** prop, and React will be satisfied. It uses this information for performance purposes in its never-ending quest to do as few DOM updates as possible.
 
 ```javascript
 const emojiListItems = dataItem.emoji.map((emoji) => {
