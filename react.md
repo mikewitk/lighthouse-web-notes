@@ -869,7 +869,7 @@ Of course, we still have the city components hard-coded into our render function
 ```javascript
 const cityNames = ['Vancouver', 'Toronto'];
 ```
-Then we'll use .map to create an array of "<CityListItem />"s from our cityNames array.
+Then we'll use .map to create an array of "CityListItem />"s from our cityNames array.
 ```javascript
 const cityNames = ['Vancouver', 'Toronto'];
 const cityListItems = cityNames.map( (cityName) => {
@@ -898,7 +898,7 @@ In fact, let's make it even more dynamic, and pass this array as a prop to CityL
 const cityNames = ['Vancouver', 'Toronto'];
 
 class CityList extends React.Component {
-  render(){
+  render(){ 
     const cityListItems = this.props.cityNames.map((cityName) => {
       return (<CityListItem city={cityName}/>);
     });
