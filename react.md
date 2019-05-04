@@ -5,7 +5,7 @@ React is a client-side JavaScript library first created at Facebook.
 In **React** there is just one pattern: the **COMPONENT**.
 Every app is a component, and components may be assembled from other components.
 
-Usually, a component's job is to get or manage data, and then present that data.
+**Usually, a component's job is to get or manage data, and then present that data.**
 
 # Webpack
 
@@ -16,7 +16,7 @@ Webpack among other things, allows us to write our client-side JavaScript code i
 Babel is a powerful library for translating JavaScript into different Javascript.
 What it does is lets us use the latest ES6 features in our code, and then creates browser-friendly ES5.
 
-## Writing JSX
+## React -> Writing JSX
 
 JSX stands for **JavaScript** with **XML**
 
@@ -82,7 +82,7 @@ const thisIsTheSameAsAbove = (<div>
 
 JSX elements are just syntactic sugar over the *React.createElement()* method. It makes our code nicer to write, and is the preferred way of creating React Components.
 
-## Props
+## React -> Props
 
 ```html
 <h1 id="main-title">Title</h1>
@@ -99,21 +99,21 @@ Props and attributes have a lot in common, but there is one **huge** difference 
 - HTML attributes can only take in **strings**.
 - Props accepts all sorts of **values, objects, arrays, and functions**.
 
-> Classes
+## React -> className
 
 In React, to refer to a class attribute of a HTML tag we use **className**.
 ```javascript
 <p className='jumbotron'></p>
 ```
 
-> Style
+### React -> className -> Style
 
 In JSX *inline* styles are the preferred way of styling an element.
 
 There are three important differences between HTML and JSX inline style:
 
 1. We write styles as object with **key-value pairs**
-2. We write every property in **camel case** (backgroundColor)
+2. We write every props in **camel case** (backgroundColor)
 3. We pass the styles object to the *style* prop using **curly braces**
 
 ```javascript
@@ -125,7 +125,7 @@ const styleObject = { backgroundColor: 'lime' };
 <span style={{styleObject}}>Hi</span>
 ```
 
-## Dynamic Content
+## React -> Dynamic Content
 
 One of the expressive powers of JSX is as a templating language.
 The idea is that we have some data, we feed it through a template, and we have markup that comes out.
@@ -159,7 +159,7 @@ And here's what React will ignore as if it never happened:
 
 Anything else will raise an error.
 
-## MAKING A TEMPLATE
+### React -> Dynamic Content -> Making a Template
 
 So, if we have the following HTML:
 
@@ -191,9 +191,9 @@ const markup = (<div className='profile'>
 </div>);
 ```
 
-## Logic and Looping
+## React -> Logic and Looping
 
-> Conditional Inclusion / Exclusion
+### React -> Logic and Looping -> Conditional Inclusion / Exclusion
 
 ```javascript
 function makeCard(dataItem) {
@@ -216,11 +216,11 @@ ReactDOM.render(
 );
 ```
 
-* Line 8 of the code won't be rendered because JSX ignores: **true, false, null, and undefined**.
+> For the case "makeCard({}) line 8 of the code won't be rendered because JSX ignores: **true, false, null, and undefined**.
 
-> Condition && (OnlyIfTrue)
+### React -> Logic and Looping -> Condition && (OnlyIfTrue)
 
-We can reduce the amount of code by using logical operators *||* and *&&*.
+We can reduce the amount of code by using logical operators **||** and **&&**.
 
 ```javascript
 const makeCard = dataItem => {
@@ -232,9 +232,9 @@ const makeCard = dataItem => {
 };
 ```
 * If **data.warning** is a truthy string, then we'll include that bit of JSX.
-* If **data.warning** is *undefined*, *false*, or an empty string, then it will be promplty ignore by React.
+* If **data.warning** is *undefined*, *false*, or an empty string, then it will be promptly ignored by React.
 
-> Conditional Switch
+### React -> Logic and Looping -> Conditional Switch
 
 What if we want to include some markup if something is true, and something else if it's false?
 
@@ -286,7 +286,7 @@ ReactDOM.render(
 // Hello, Jeff
 ```
 
-> Condition ? (IfTrue) : (IfFalse)
+### React -> Logic and Looping -> Condition ? (IfTrue) : (IfFalse)
 
 ```javascript
 function makeCard(dataItem) {
@@ -301,7 +301,7 @@ function makeCard(dataItem) {
   );
 ```
 
-> Looping
+### React -> Logic and Looping -> Looping
 
 In EJS, we used **for** or **.forEach(fn)** to iterate over an array or object and perform some **instruction** on each member.
 In React, we are **composing** pieces rather than just running instructions, so here, we want to take an array of data and **get an array of JSX expressions**.
@@ -337,7 +337,7 @@ const data2 = {
 
 function makeCard(dataItem) {
 
-  const emojiListItems = dataItem.emojis.map((emoji) => {
+  const emojiListItems = dataItem.emojis.map( (emoji) => {
     return (<li>{emoji}</li>);
   });
 
@@ -377,7 +377,7 @@ const emojiListItems = dataItem.emoji.map((emoji) => {
 
 **PS:** It only works here because our emojis are unique. **Keys need to be unique**
 
-## DOM Events
+## React -> DOM Events
 
 With React, we add listeners directly by passing functions to certain props. In the following example, we will pass an **alertFn** function to a **button** component using its **onClick** prop.
 
@@ -428,7 +428,7 @@ function onSubmit(event) {
   event.preventDefault();
   const form = event.target;
   const emailInput = form.elements.email;
-  const passowrdInput = form.elements.password;
+  const passwordInput = form.elements.password;
 
   alert(`Your email is ${emailInput.value} and your password is ${passwordInput.value}`);
 
@@ -472,7 +472,7 @@ import ReactDOM from "react-dom";
 ```
 `The reason that there are two libraries instead of one, is so that the core react library doesn't have to be tied to the browser. This means that we can use the react library on any platform, like mobile. In the browser, we have to include react and react-dom. On mobile, we have to include react and react-native. The react library is the same, but the rendering library changes.`
 
-### Render
+### React and ReactDOM -> Render
 
 ```javascript
 const greeting = <h1>Hello!</h1> // This uses the React Library
@@ -483,7 +483,7 @@ ReactDOM.render(greeting, root); // ReactDOM does the rendering
 1. a React element
 2. The element in DOM where React will render the element to
 
-## Classes
+## React and ReactDOM -> Classes
 
 * If we want to make a bunch of objects that have the same behaviour, we can create a class that provides a blueprint:
 ```javascript
@@ -738,7 +738,7 @@ console.log('Laser Finn After Swim', laserFinn);
 //  laserSound: 'PEW PEW' }
 ```
 
-## Crafting Components Intro
+## React and ReactDOM -> Crafting Components Intro
 
 In React, there's just one architectural pattern: the **Component**.
 
@@ -827,7 +827,7 @@ ReactDOM.render(
 
 A custom component extends the **Component** class in React, and, at the very least, implements the **render()** method. The **render()** method must return a JSX expression. Once we've created or included a component, we're able to use it in our JSX as we would with an HTML element.
 
-## Props (again)
+## React and ReactDOM -> Props (again)
 
 Wouldn't it be great if we could just create a single, reusable **CityListItem** component and pass it the name of the city when we use it?
 
@@ -863,7 +863,7 @@ ReactDOM.render(
   root);
 ```
 
-### Props -> Array of Props
+### React and ReactDOM -> Props -> Array of Props
 
 Of course, we still have the city components hard-coded into our render function. Let's do this in a more data-driven way, using props again. We'll start with an array of city names:
 ```javascript
@@ -915,18 +915,7 @@ ReactDOM.render(
   root);
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-## State
+## React and ReactDOM -> State
 
 Unlike *props*, which are passed into the component from outside, a component is responsible for creating and managins its own **state**.
 
