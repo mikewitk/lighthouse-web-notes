@@ -26,7 +26,7 @@ countEvenToTwelve(0);
 ```
 Recursion in a nutshell: a function that call itself until it doesn't.
 
-Our countEvenToTwelve function will continue to call itself as long as *number <= 12* so as soon as *number . 12* the function will no longer call itself.
+Our countEvenToTwelve function will continue to call itself as long as *number <= 12* so as soon as *number > 12* the function will no longer call itself.
 Every recursive function **must** stop calling itself at some point.
 
 - We refer to *number <= 12* as a **recursive case**, because as long as this is true, the function will continue to call itself.

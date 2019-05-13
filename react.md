@@ -917,7 +917,7 @@ ReactDOM.render(
 
 ## React and ReactDOM -> State
 
-Unlike *props*, which are passed into the component from outside, a component is responsible for creating and managins its own **state**.
+Unlike *props*, which are passed into the component from outside, a component is responsible for creating and managing its own **state**.
 
 There are two things we can do with state
 
@@ -1038,3 +1038,121 @@ A component has two sources of data: the **state** and the **props**.
 * A component may send data from its state to a child component's props.
 
 The one-way data flow from parent to child is a big part of React's philosophy, and how it manages to be so efficient.
+
+# REACT CLASS
+
+* **Rule 1**: always import react (and Component);
+
+```javascript
+import react, {Component} from 'react';
+```
+
+* **Rule 2**: Classes are your componeents. They will extend Component
+```javascript
+class App extends Component {
+
+}
+```
+
+* **Rule 3**: All components MUST!!!! have a render() function
+```javascript
+class App extends Component {
+  render (
+    return {
+      
+    }
+  )
+}
+```
+* **Rule 4**: If component is in a different file, ALWAYS export that component
+```javascript
+export default App;
+```
+
+* **Rule 5**: Always wrap your JSX into one single element
+```javascript
+class App extends Component {
+  render (
+    return {
+     <div>
+     /* Anything in between */
+     </div>
+    }
+  )
+}
+```
+
+* Rule 6: There are things called constructors and it has state
+```javascript
+class App extends Component {
+  constructor {
+    super(props);
+    this.state = { number: 0 }
+  }
+
+  number = 0 => {
+    let x = this.state.number;
+    x++;
+    this.setState( { number: x } );
+  }
+}
+```
+
+# REACT BREAKOUT
+
+## React -> Lifecycle Methods
+
+React has a mechanism that lets us write as if we're replacing all the DOM every time, but React is smart enough to pick and choose so that it can perform as few DOM operations as it needs to.
+This mechanism is the **Virtual DOM**.
+
+In order to understand wha tthe Virutal DOM does, we have to walk through the three major steps in a component's lifecycle: Mounting, Updating, and Unmounting.
+
+Lifecycle methods are methods that we can add to the Component class that will be classed at different times.
+
+### React -> Lifecycle Methods -> Mounting
+
+When a component is added to the DOM or its parent.
+
+### React -> Lifecycle Methods -> Unmounting
+
+When a component is removed from the Virtual DOM
+
+### React -> Lifecycle Methods -> Updating
+
+When a component's props or state changes
+
+**Don't use *this.setState* in the *render()* function.**
+
+### React -> Lifecycle Methods -> componentDidMount()
+
+componentDidMount() is to React what the "document.ready" is to jQuery. It starts running stuff *after* it's available on the DOM.
+
+That makes this the ideal place to do two big things:
+
+* Trigger async acitons that we want to do when this component is created
+* Target the DOM imperatively for any of the following
+  - Add global event listeners
+  - Draw on canvas
+  - Start animation timers
+  - Listen to notifications sources
+  - Run any other imperative browser APIs
+
+
+> OBJECT DESTRUCTURING
+
+This
+```javascript
+const person = {
+  firstName: 'Joel',
+  lastName: 'Shinness'
+};
+// THIS
+const firstName = person.firstName;
+const lastName = person.lastName;
+
+// IS EQUAL TO THIS
+const { firstName, lastName } = person;
+```
+
+# React CLASS
+
